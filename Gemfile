@@ -12,6 +12,7 @@ gem 'turbolinks'
 gem 'uglifier'
 
 group :development do
+  gem 'dotenv-rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
