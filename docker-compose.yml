@@ -1,0 +1,39 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:11-alpine
+    restart: always
+    container_name: tintity-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - tintitynet
+  web:
+    image: tintity
+    build: .
+    container_name: tintity-app
+    command: bundle exec rails server -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    networks:
+      - tintitynet
+  adminer:
+    image: adminer
+    container_name: tintity-adminer
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
+    networks:
+      - tintitynet
+
+networks:
+  tintitynet:
+
